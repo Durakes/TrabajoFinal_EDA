@@ -5,6 +5,7 @@
 
 using namespace std;
 
+
 struct nodoCancion{
     int numeroReproducciones;
     string nombreCancion;
@@ -28,6 +29,7 @@ int main()
 }
 
 void menu(){
+
     int opcion, valor, contador=0;
     string cancion, album;
     do{
@@ -60,6 +62,7 @@ void menu(){
         system("cls");
     }while(opcion != 3);
 }
+
 
 nodoCancion *crearNodo(int n, string cancion, string album){
     nodoCancion *nuevo_nodo = new nodoCancion();

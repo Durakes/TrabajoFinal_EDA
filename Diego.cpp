@@ -5,15 +5,21 @@
 
 using namespace std;
 
-struct Cancion{
-    int valor;
-    Cancion *siguiente;
+
+struct nodoCancion{
+    int numeroReproducciones;
+    string nombreCancion;
+    string albumCancion;
+    nodoCancion *izq;
+    nodoCancion *der;
 };
 
 void menu();
-void mostrarRegistro(Cancion *&);
-void registroActividad(Cancion *&, int);
-Cancion *registro = NULL;
+nodoCancion *crearNodo(int,string,string);
+void insertarNodo(nodoCancion *&, int,string,string);
+nodoCancion *song = NULL;
+void mostrarCancion(nodoCancion *, int);
+void listaReproduccion(nodoCancion *);
 
 int main()
 {
@@ -23,58 +29,78 @@ int main()
 }
 
 void menu(){
-    int opcion, valor;
+
+    int opcion, valor, contador=0;
+    string cancion, album;
     do{
         cout<<"\t MENU \n";
-        cout<<"1. Ingresar registros\n";
-        cout<<"2. Mostrar registros\n";
+        cout<<"1. Ingresar registro de cancion\n";
+        cout<<"2. Mostrar registro de actividad\n";
         cout<<"3. Salir\n";
         cout<<"Opcion: ";
         cin>>opcion;
         
         switch(opcion){
             
-            case 1: cout<<"Digite un numero";
+            case 1: cout<<"Digite el nombre de la cancion: ";
+                    cin>>cancion;
+                    cout<<"Digite el nombre del album de la cancion: ";
+                    cin>>album;
+                    cout<<"Digite el número de reproducciones de la cancion: ";
                     cin>>valor;
-                    registroActividad(registro, valor);
+                    insertarNodo(song, valor, cancion, album);
+                    cout<<"\n";
+                    system("pause");
                     break;
             
-            case 2: mostrarRegistro(registro);
+            case 2: cout<<"\n Lista de reproduccion: \n\n";
+                    listaReproduccion(song);
+                    cout<<"\n\n";
+                    system("pause");
                     break;
         }
         system("cls");
     }while(opcion != 3);
 }
 
-void registroActividad( Cancion *&registro, int n){
-    Cancion *nuevo_nodo = new Cancion();
-    nuevo_nodo->valor = n;
+
+nodoCancion *crearNodo(int n, string cancion, string album){
+    nodoCancion *nuevo_nodo = new nodoCancion();
     
-    Cancion * aux1 = registro;
-    Cancion * aux2;
+    nuevo_nodo-> numeroReproducciones = n;
+    nuevo_nodo-> nombreCancion = cancion;
+    nuevo_nodo-> albumCancion = album;
+    nuevo_nodo-> der = NULL;
+    nuevo_nodo-> izq = NULL;
     
-    while((aux1 != NULL) && (aux1->valor < n)){
-        aux2 = aux1;
-        aux1 = aux1 -> siguiente;
-    }
-    
-    if ( registro == aux1){
-        registro = nuevo_nodo;
-    }
-    else{
-        aux2->siguiente = nuevo_nodo;
-    }
-    
-    nuevo_nodo->siguiente = aux1;
+    return nuevo_nodo;
 }
 
-void mostrarRegistro( Cancion *&registro){
+void insertarNodo(nodoCancion *&song, int n, string cancion, string album){
+    if(song == NULL){
+        nodoCancion *nueva_cancion = crearNodo(n, cancion, album);
+        song = nueva_cancion;
+    }
     
-    Cancion *actual = new Cancion();
-    actual = registro;
-    
-    while(actual != NULL){
-        cout<<actual->valor<<" -> " ;
-        actual = actual->siguiente;
+    else{
+        int valorCancion = song->numeroReproducciones;
+        if(n < valorCancion){
+            insertarNodo(song -> izq,n,cancion,album);
+        }
+        else{
+            insertarNodo(song -> der,n,cancion,album);
+        }
+    }
+}
+
+void listaReproduccion(nodoCancion *song){
+    if(song == NULL){
+        return;
+    }
+    else{
+        listaReproduccion(song->der);
+        cout<<"("<<song->nombreCancion<< "-" << song->albumCancion<<")";
+        cout<<"\n";
+        listaReproduccion(song->izq);
     }
 }

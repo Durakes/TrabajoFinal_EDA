@@ -85,6 +85,7 @@ void generarPlaylist(int cod, vector<Cancion> playlistEsp, vector<Cancion> canci
     Grafo grafoGenero = grafoGeneros();
     vector<Genero> generos;
     vector<Cancion> nuevaPlaylist;
+    nuevaPlaylist.clear();
     try
     {
         string linea;

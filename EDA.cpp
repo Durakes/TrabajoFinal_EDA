@@ -8,7 +8,7 @@
 #include <map>
 #include "Playlist.h"
 #include "Genero.h"
-
+#include "Archivos.cpp"
 
 using namespace std;
 int main()
@@ -126,11 +126,18 @@ int main()
             {
                 if(cancion.getGenero() == i)
                 {
-                    cancionesRecomendadas.push_back(cancion);
+                    for(Cancion cancionP: cancionesPlaylist)
+                    {
+                        if(cancionP.getCodigo() != cancion.getCodigo())
+                        {
+                            cancionesRecomendadas.push_back(cancion);
+                        }
+                    }
                 }
             }
         }
     }
+    
 
     for(Cancion cancion1:cancionesRecomendadas)
     {

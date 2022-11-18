@@ -15,6 +15,7 @@
 #include "../include/Cancion.h"
 #include "../include/Grafo.h"
 #include "../include/Genero.h"
+#include "../include/ArbolAVL.h"
 using namespace std;
 
 Grafo grafoGeneros()
@@ -80,7 +81,7 @@ void recomendarRandom(map<int,int> generosMap, float tot, vector<Cancion> cancio
 
 void generarPlaylist(int cod, vector<Cancion> playlistEsp, vector<Cancion> cancionesTotales)
 {
-    system("cls");
+    std::system("cls");
     int cantidadGeneros = 13;
     Grafo grafoGenero = grafoGeneros();
     vector<Genero> generos;
@@ -195,12 +196,12 @@ void generarPlaylist(int cod, vector<Cancion> playlistEsp, vector<Cancion> canci
     {
         cout << cancion.getNombre() << endl;
     }
-    system("pause");
+    std::system("pause");
 }
 
 void detallePlaylist(int codUsuario, Playlist playlistUsuario)
 {
-    system("cls");
+    std::system("cls");
     cout << playlistUsuario.getNombre() << endl;
 
     vector<int> codCanciones;
@@ -301,7 +302,7 @@ void detallePlaylist(int codUsuario, Playlist playlistUsuario)
 
 void mostrarPlaylist(int cod, vector<Playlist> *playlists)
 {
-    system("cls");
+    std::system("cls");
     int numero = 1;
     vector<Playlist> playlistsUsu;
     vector<int> codigos;
@@ -333,7 +334,7 @@ void mostrarPlaylist(int cod, vector<Playlist> *playlists)
 
 void crearPlaylist(int cod, vector<Playlist> *playlists)
 {
-    system("cls");
+    std::system("cls");
     string nombrePlaylist;
     cout << "Ingrese el nombre de la playlist > " << endl;
     getline(cin, nombrePlaylist);
@@ -357,12 +358,12 @@ void crearPlaylist(int cod, vector<Playlist> *playlists)
     }
     
     cout << "Se registro la nueva playlist exitosamente! " << endl;
-    cout << system("pause");
+    cout << std::system("pause");
 }
 
 void menuPlaylist(int cod)
 {
-    system("cls");
+    std::system("cls");
     int opcion;
     vector<Playlist> vectorPlaylist;
     Playlist playlist;
@@ -414,19 +415,79 @@ void menuPlaylist(int cod)
         menuPlaylist(cod);
         break;
     case 3:
-        system("cls");
+        std::system("cls");
         break;
     default:
         cout << "Ingrese una opcion correcta!!" << endl;
-        system("pause");
+        std::system("pause");
         menuPlaylist(cod);
         break;
     }
 }
 
+void buscarCancion(int cod)
+{
+    std::system("cls");
+    string cancionBuscar;
+    cout << "##### Buscar Cancion #####" << endl;
+    cout << "Ingrese el nombre de la cancion a buscar > " << endl;
+    getline(cin, cancionBuscar);
+
+    Nodo* raiz = NULL;
+
+    try
+    {
+        string linea;
+        size_t posicionFinal;
+        fstream archivo;
+
+        archivo.open(R"(..\db\Canciones.csv)", ios :: in);
+        if(archivo.is_open())
+        {
+            while (!archivo.eof())
+            {
+                while (getline(archivo, linea))
+                {
+                    vector<string> temporal;
+                    while ((posicionFinal = linea.find(";")) != string::npos)
+                    {
+                        temporal.push_back(linea.substr(0, posicionFinal));
+                        linea.erase(0, posicionFinal+1);
+                    }
+                    Cancion cancion;
+                    cancion.setCodigo(stoi(temporal[0]));
+                    cancion.setNombre(temporal[1]);
+                    cancion.setGenero(stoi(temporal[2]));
+
+                    raiz = insertarNodo(raiz,cancion);
+                }
+            }
+        }
+        archivo.close();
+    }catch(exception e)
+    {
+        cout << "Ocurrio un error al leer el archivo!";
+    }
+
+    Cancion *cancionEncontrada = buscarArbol(raiz, cancionBuscar);
+
+    if(cancionEncontrada != NULL)
+    {
+        std::system("cls");
+        cout << "Cancion encontrada " << endl;
+        cout << "Nombre > \t" << cancionEncontrada->getNombre() << "\t sGenero > \t" << cancionEncontrada->getGenero() << endl;
+        std::system("pause");
+    }else
+    {
+        std:system("cls");
+        cout << "Cancion no encontrada" << endl;
+        std::system("pause");
+    }
+}
+
 void menuPrincipal(int cod)
 {
-    system("cls");
+    std::system("cls");
     int opcion;
     cout << "##### MENU PRINCIPAL #####" << endl;
     cout << "Mostrar Playlist \t [1]" << endl;
@@ -441,15 +502,16 @@ void menuPrincipal(int cod)
         menuPrincipal(cod);
         break;
     case 2:
-        /*Buscador*/
+        buscarCancion(cod);
+        menuPrincipal(cod);
         break;
     case 3:
-        system("cls");
+        std::system("cls");
         exit(0);
         break;
     default:
         cout << "Ingrese una opcion correcta!!" << endl;
-        system("pause");
+        std::system("pause");
         menuPrincipal(cod);
         break;
     }
@@ -458,7 +520,7 @@ void menuPrincipal(int cod)
 
 void inicioSesion()
 {
-    system("cls");
+    std::system("cls");
     int opcion;
     int ch;
     string nomUsuario;
@@ -535,16 +597,16 @@ void inicioSesion()
         menuPrincipal(usuario.getCodigo());
     else
     {
-        system("cls");
+        std::system("cls");
         cout << "Datos incorrectos, vuelva a intentarlo " << endl;
-        system("pause");
+        std::system("pause");
         inicioSesion();
     }
 }
 
 void pantallaInicial()
 {
-    system("cls");
+    std::system("cls");
     int opcion;
     cout << "##### BIENVENIDO #####" << endl;
     cout << "Iniciar sesion \t \t [1]" << endl;
@@ -556,9 +618,9 @@ void pantallaInicial()
         inicioSesion();
         break;
     default:
-        system("cls");
+        std::system("cls");
         cout << "Ingrese una opcion valida " << endl;
-        system("pause");
+        std::system("pause");
         pantallaInicial();
         break;
     }

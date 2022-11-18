@@ -10,6 +10,7 @@
 #include <cmath>
 #include <random>
 #include <conio.h>
+#include <ctime>
 #include "../include/Usuario.h"
 #include "../include/Playlist.h"
 #include "../include/Cancion.h"
@@ -119,7 +120,7 @@ void generarPlaylist(int cod, vector<Cancion> playlistEsp, vector<Cancion> canci
         
     }catch(exception e)
     {
-        cout << "Ocurrio un error al leer el archivo!!!";
+        std::cout << "Ocurrio un error al leer el archivo!!!";
     }
 
     map<int,int> generoMap;
@@ -194,7 +195,7 @@ void generarPlaylist(int cod, vector<Cancion> playlistEsp, vector<Cancion> canci
 
     for(Cancion cancion:cancionesFinal)
     {
-        cout << cancion.getNombre() << endl;
+        std::cout << cancion.getNombre() << endl;
     }
     std::system("pause");
 }
@@ -202,7 +203,7 @@ void generarPlaylist(int cod, vector<Cancion> playlistEsp, vector<Cancion> canci
 void detallePlaylist(int codUsuario, Playlist playlistUsuario)
 {
     std::system("cls");
-    cout << playlistUsuario.getNombre() << endl;
+    std::cout << playlistUsuario.getNombre() << endl;
 
     vector<int> codCanciones;
     vector<Cancion> cancionesPlay;
@@ -238,7 +239,7 @@ void detallePlaylist(int codUsuario, Playlist playlistUsuario)
         archivo.close();
     }catch(exception e)
     {
-        cout << "Ocurrio un error al leer el archivo!";
+        std::cout << "Ocurrio un error al leer el archivo!";
     }
 
     try
@@ -272,7 +273,7 @@ void detallePlaylist(int codUsuario, Playlist playlistUsuario)
         archivo.close();
     }catch(exception e)
     {
-        cout << "Ocurrio un error al leer el archivo!";
+        std::cout << "Ocurrio un error al leer el archivo!";
     }
 
     int index = 0;
@@ -287,12 +288,12 @@ void detallePlaylist(int codUsuario, Playlist playlistUsuario)
 
     for(int i = 0; i < cancionesDet.size(); i++)
     {
-        cout << "Nombre: " << cancionesDet[i].getNombre() << "\t" << "Genero: " << cancionesDet[i].getGenero() << endl;
+        std::cout << "Nombre: " << cancionesDet[i].getNombre() << "\t" << "Genero: " << cancionesDet[i].getGenero() << endl;
     }
 
     int respuesta;
-    cout << "Para generar una playlist nueva presione 1" << endl;
-    cout << "Digite la opcion que desea > \t"; cin >> respuesta; cin.ignore();
+    std::cout << "Para generar una playlist nueva presione 1" << endl;
+    std::cout << "Digite la opcion que desea > \t"; std::cin >> respuesta; std::cin.ignore();
 
     if(respuesta == 1)
     {
@@ -317,14 +318,14 @@ void mostrarPlaylist(int cod, vector<Playlist> *playlists)
     
     for(int i = 0; i < playlistsUsu.size(); i++)
 	{
-        cout << "Nro. Playlist: " << numero << "\t" << "Nombre: " << playlistsUsu[i].getNombre() << endl;
+        std::cout << "Nro. Playlist: " << numero << "\t" << "Nombre: " << playlistsUsu[i].getNombre() << endl;
 		codigos.push_back(numero);
 		numero++;
 	}
 
     int respuesta;
-    cout << "Ingrese el numero de playlist que quiere ingresar" << endl;
-    cout << "Si desea volver atras escriba 0 > "; cin >> respuesta; cin.ignore();
+    std::cout << "Ingrese el numero de playlist que quiere ingresar" << endl;
+    std::cout << "Si desea volver atras escriba 0 > "; std::cin >> respuesta; std::cin.ignore();
 
     if(respuesta != 0)
     {
@@ -336,8 +337,8 @@ void crearPlaylist(int cod, vector<Playlist> *playlists)
 {
     std::system("cls");
     string nombrePlaylist;
-    cout << "Ingrese el nombre de la playlist > " << endl;
-    getline(cin, nombrePlaylist);
+    std::cout << "Ingrese el nombre de la playlist > " << endl;
+    std::getline(std::cin, nombrePlaylist);
 
     Playlist nuevaPlaylist = Playlist(playlists->size() + 1,nombrePlaylist,cod);
 
@@ -354,11 +355,11 @@ void crearPlaylist(int cod, vector<Playlist> *playlists)
 
     }catch(exception e)
     {
-        cout << "Ocurrio un error al grabar el archivo!!!";
+        std::cout << "Ocurrio un error al grabar el archivo!!!";
     }
     
-    cout << "Se registro la nueva playlist exitosamente! " << endl;
-    cout << std::system("pause");
+    std::cout << "Se registro la nueva playlist exitosamente! " << endl;
+    std::cout << std::system("pause");
 }
 
 void menuPlaylist(int cod)
@@ -367,11 +368,11 @@ void menuPlaylist(int cod)
     int opcion;
     vector<Playlist> vectorPlaylist;
     Playlist playlist;
-    cout << "Playlist" << endl;
-	cout <<	"Crear una playlist \t [1]" << endl;
-	cout << "Mostrar tus playlist \t [2]" << endl;
-	cout << "Atras \t \t \t [3]" << endl;				
-	cout << "Ingrese la opcion que desea > "; cin >> opcion; cin.ignore();
+    std::cout << "Playlist" << endl;
+	std::cout << "Crear una playlist \t [1]" << endl;
+	std::cout << "Mostrar tus playlist \t [2]" << endl;
+	std::cout << "Atras \t \t \t [3]" << endl;				
+	std::cout << "Ingrese la opcion que desea > "; std::cin >> opcion; std::cin.ignore();
 
     try
     {
@@ -402,7 +403,7 @@ void menuPlaylist(int cod)
         archivo.close();
     }catch(exception e)
     {
-        cout << "Ocurrio un error al leer el archivo!!!";
+        std::cout << "Ocurrio un error al leer el archivo!!!";
     }
 
     switch (opcion)
@@ -418,22 +419,112 @@ void menuPlaylist(int cod)
         std::system("cls");
         break;
     default:
-        cout << "Ingrese una opcion correcta!!" << endl;
+        std::cout << "Ingrese una opcion correcta!!" << endl;
         std::system("pause");
         menuPlaylist(cod);
         break;
     }
 }
 
+void agregarCancionRegistro(int codCancion, int codPlaylist)
+{
+    string nuevoRegistro = to_string(codPlaylist) + ";" + to_string(codCancion) + ";";
+    try
+    {
+        fstream archivo;
+        archivo.open(R"(..\db\PlaylistCancion.csv)", ios :: app);
+        if(archivo.is_open())
+        {
+            archivo << nuevoRegistro << endl;
+            archivo.close();
+        }
+        std::cout << "Se agrego la cancion exitosamente!" << endl;
+
+    }catch(exception e)
+    {
+        std::cout << "Ocurrio un error al grabar el archivo!!!";
+    }
+}
+
+void agregarCancion(int cod, Cancion cancion)
+{
+    system("cls");
+    std::cout << cancion.getNombre() << endl;
+    system("pause");
+
+    Playlist play;
+    vector<Playlist> plays;
+    try
+    {
+        string linea;
+        size_t posicionFinal;
+        fstream archivo;
+
+        archivo.open(R"(..\db\Playlist.csv)", ios :: in);
+        if(archivo.is_open())
+        {
+            while (!archivo.eof())
+            {
+                while (getline(archivo, linea))
+                {
+                    vector<string> temporal;
+                    while ((posicionFinal = linea.find(";")) != string::npos)
+                    {
+                        temporal.push_back(linea.substr(0, posicionFinal));
+                        linea.erase(0, posicionFinal+1);
+                    }
+                    play.setCodigo(stoi(temporal[0]));
+                    play.setNombre(temporal[1]);
+                    play.setUsuario(stoi(temporal[2]));
+                    plays.push_back(play);
+                }
+            }
+        }
+        archivo.close();
+    }catch(exception e)
+    {
+        std::cout << "Ocurrio un error al leer el archivo!!!";
+    }
+
+    vector<Playlist> playlistsUsu;
+    int numero = 1;
+    vector<int> codigos;
+    for(Playlist play:plays)
+    {
+        if(play.getUsuario() == cod)
+        {
+            playlistsUsu.push_back(play);
+        }
+    }
+    
+    for(int i = 0; i < playlistsUsu.size(); i++)
+	{
+        std::cout << "Nro. Playlist: " << numero << "\t" << "Nombre: " << playlistsUsu[i].getNombre() << endl;
+		codigos.push_back(numero);
+		numero++;
+	}
+
+    int opcion;
+    std::cout << "Ingrese el numero de playlist al que desea agregar la cancion > "; cin >> opcion; cin.ignore();
+    
+    agregarCancionRegistro(cancion.getCodigo(), playlistsUsu[opcion - 1].getCodigo());
+    
+    std::system("pause");
+}
+
 void buscarCancion(int cod)
 {
     std::system("cls");
     string cancionBuscar;
-    cout << "##### Buscar Cancion #####" << endl;
-    cout << "Ingrese el nombre de la cancion a buscar > " << endl;
-    getline(cin, cancionBuscar);
+    std::cout << "##### Buscar Cancion #####" << endl;
+    std::cout << "Ingrese el nombre de la cancion a buscar > " << endl;
+    std::getline(std::cin, cancionBuscar);
+    
+    unsigned t0, t1;
 
+    t0 = clock();
     Nodo* raiz = NULL;
+    //vector<Cancion> todasCanciones;
 
     try
     {
@@ -460,28 +551,60 @@ void buscarCancion(int cod)
                     cancion.setGenero(stoi(temporal[2]));
 
                     raiz = insertarNodo(raiz,cancion);
+                    //todasCanciones.push_back(cancion);
                 }
             }
         }
         archivo.close();
     }catch(exception e)
     {
-        cout << "Ocurrio un error al leer el archivo!";
+        std::cout << "Ocurrio un error al leer el archivo!";
     }
 
     Cancion *cancionEncontrada = buscarArbol(raiz, cancionBuscar);
 
+    /*for(Cancion cancionI: todasCanciones)
+    {
+        if(cancionI.getNombre().compare(cancionBuscar) == 0)
+        {
+            std::system("cls");
+            cout << "Cancion encontrada " << endl;
+            cout << "Nombre > \t" << cancionI.getNombre() << "\nID Genero > \t" << cancionI.getGenero() << endl;
+            t1 = clock();
+            double time = (double(t1-t0)/CLOCKS_PER_SEC);
+            cout << "Tiempo de Ejecucion: " << time << endl;
+            std::system("pause");
+            break;
+        }
+    }*/
+
     if(cancionEncontrada != NULL)
     {
         std::system("cls");
-        cout << "Cancion encontrada " << endl;
-        cout << "Nombre > \t" << cancionEncontrada->getNombre() << "\t sGenero > \t" << cancionEncontrada->getGenero() << endl;
+        std::cout << "Cancion encontrada " << endl;
+        std::cout << "Nombre > \t" << cancionEncontrada->getNombre() << "\nID Genero > \t" << cancionEncontrada->getGenero() << endl;
+        t1 = clock();
+        double time = (double(t1-t0)/CLOCKS_PER_SEC);
+        std::cout << "Tiempo de Ejecucion: " << time << endl;
         std::system("pause");
     }else
     {
         std:system("cls");
-        cout << "Cancion no encontrada" << endl;
+        std::cout << "Cancion no encontrada" << endl;
+        t1 = clock();
+        double time = (double(t1-t0)/CLOCKS_PER_SEC);
+        std::cout << "Tiempo de Ejecucion: " << time << endl;
         std::system("pause");
+    }
+
+    int opcion;
+    std::cout << endl;
+    std::cout << "Desea agregar la cancion a una playlist?" << endl;
+    std::cout << "Ingrese [1] para si > "; std::cin >> opcion; std::cin.ignore();
+
+    if(opcion == 1)
+    {
+        agregarCancion(cod, *cancionEncontrada);
     }
 }
 
@@ -489,11 +612,11 @@ void menuPrincipal(int cod)
 {
     std::system("cls");
     int opcion;
-    cout << "##### MENU PRINCIPAL #####" << endl;
-    cout << "Mostrar Playlist \t [1]" << endl;
-    cout << "Buscar Cancion \t \t [2]" << endl;
-    cout << "Salir \t \t \t [3]" << endl;
-    cout << "Ingrese la opcion que desea > \t"; cin >> opcion; cin.ignore();
+    std::cout << "##### MENU PRINCIPAL #####" << endl;
+    std::cout << "Mostrar Playlist \t [1]" << endl;
+    std::cout << "Buscar Cancion \t \t [2]" << endl;
+    std::cout << "Salir \t \t \t [3]" << endl;
+    std::cout << "Ingrese la opcion que desea > \t"; std::cin >> opcion; std::cin.ignore();
 
     switch (opcion)
     {
@@ -510,7 +633,7 @@ void menuPrincipal(int cod)
         exit(0);
         break;
     default:
-        cout << "Ingrese una opcion correcta!!" << endl;
+        std::cout << "Ingrese una opcion correcta!!" << endl;
         std::system("pause");
         menuPrincipal(cod);
         break;
@@ -528,9 +651,9 @@ void inicioSesion()
     Usuario usuario;
     vector<Usuario> usuariosTot;
     bool validacion = false;
-    cout << "##### INICIO DE SESION #####" << endl;
-    cout << "Ingrese su Usuario > "; getline(cin, nomUsuario);
-    cout << "Ingrese su Contrasena > "; ch = getch();
+    std::cout << "##### INICIO DE SESION #####" << endl;
+    std::cout << "Ingrese su Usuario > "; std::getline(std::cin, nomUsuario);
+    std::cout << "Ingrese su Contrasena > "; ch = getch();
 
     /* Contraseña */
     while (ch != 13) /*13 ASCCI ENTER*/
@@ -538,12 +661,12 @@ void inicioSesion()
         if(ch != 8) /*8 BACKSPACE*/
         {
             contrasena.push_back(ch);
-            cout << "*";
+            std::cout << "*";
         }else
         {
             if(contrasena.length() > 0)
             {
-                cout << "\b \b";
+                std::cout << "\b \b";
                 contrasena = contrasena.substr(0, contrasena.length() - 1);
             }
         }
@@ -580,7 +703,7 @@ void inicioSesion()
         archivo.close();
     }catch(exception e)
     {
-        cout << "Ocurrio un error al leer el archivo!!!";
+        std::cout << "Ocurrio un error al leer el archivo!!!";
     }
 
     for(Usuario u:usuariosTot)
@@ -598,7 +721,7 @@ void inicioSesion()
     else
     {
         std::system("cls");
-        cout << "Datos incorrectos, vuelva a intentarlo " << endl;
+        std::cout << "Datos incorrectos, vuelva a intentarlo " << endl;
         std::system("pause");
         inicioSesion();
     }
@@ -608,9 +731,9 @@ void pantallaInicial()
 {
     std::system("cls");
     int opcion;
-    cout << "##### BIENVENIDO #####" << endl;
-    cout << "Iniciar sesion \t \t [1]" << endl;
-    cout << "Presione 1 para continuar > \t"; cin >> opcion; cin.ignore();
+    std::cout << "##### BIENVENIDO #####" << endl;
+    std::cout << "Iniciar sesion \t \t [1]" << endl;
+    std::cout << "Presione 1 para continuar > \t"; std::cin >> opcion; std::cin.ignore();
 
     switch (opcion)
     {
@@ -619,7 +742,7 @@ void pantallaInicial()
         break;
     default:
         std::system("cls");
-        cout << "Ingrese una opcion valida " << endl;
+        std::cout << "Ingrese una opcion valida " << endl;
         std::system("pause");
         pantallaInicial();
         break;

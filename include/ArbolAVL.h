@@ -20,7 +20,7 @@ Nodo * nuevoNodo(Cancion x)
         nuevo->derecha = NULL; 
         nuevo->altura = 0; 
     }else
-        cout<<"Error al separar la memoria del nuevo nodo\n";
+        std::cout<<"Error al separar la memoria del nuevo nodo\n";
     return nuevo; 
 }
 
@@ -144,7 +144,7 @@ void preOrder(Nodo *raiz)
 {
     if(raiz != NULL)
     {
-        cout << raiz->cancion.getNombre()<< " " << endl;
+        std::cout << raiz->cancion.getNombre()<< " " << endl;
         preOrder(raiz->izquierdo);
         preOrder(raiz->derecha);
     }

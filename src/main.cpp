@@ -41,8 +41,9 @@ Grafo grafoGeneros()
 
 bool randomBool()
 {
-    static auto gen = std::bind(std::uniform_int_distribution<>(0,1),std::default_random_engine());
-    return gen();
+    srand(time(0));
+    bool gen = rand() % 2;
+    return gen;
 }
 
 bool existeCancion(int cod, vector<Cancion> *canciones)
@@ -193,9 +194,12 @@ void generarPlaylist(int cod, vector<Cancion> playlistEsp, vector<Cancion> canci
         recomendarRandom(generoFinal,totalPlaylistNueva, cancionesRecomendadas, i, &cancionesFinal);
     }
 
+    system("cls");
+    cout << "#### NUEVA PLAYLIST #####" << endl;
     for(Cancion cancion:cancionesFinal)
     {
         std::cout << cancion.getNombre() << endl;
+        //std::cout << "\t" << cancion.getGenero() << endl;
     }
     std::system("pause");
 }

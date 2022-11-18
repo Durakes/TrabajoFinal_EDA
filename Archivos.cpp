@@ -1,3 +1,5 @@
+#ifndef __ARCHIVOS_CPP__
+#define __ARCHIVOS_CPP__
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -5,7 +7,7 @@
 #include <string>
 #include <sstream>
 #include <map>
-#include "Grafos.h"
+#include "Grafo.h"
 #include "Playlist.h"
 #include "Cancion.h"
 #include "Genero.h"
@@ -199,3 +201,4 @@ void cargarGeneros(vector<Genero> *generos)
         cout << "Ocurrio un error al leer el archivo!!!";
     }
 }
+#endif

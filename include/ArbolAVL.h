@@ -2,7 +2,6 @@
 #include "Cancion.h"
 using namespace std;
 
-
 typedef struct nodo
 {
     Cancion cancion; 
@@ -115,28 +114,28 @@ Nodo* insertarNodo(Nodo* nodo, Cancion valor)
 
     int balance = factorDeEquilibrio(nodo);
 
+    //Rotación solo derecha
     if (balance > 1 && valor.getNombre() < nodo->izquierdo->cancion.getNombre())
         return rotacionDerecha(nodo);
 
-    // Right Right Case
+    // Rotación solo izquiera
     if (balance < -1 && valor.getNombre() > nodo->derecha->cancion.getNombre())
         return rotacionIzquierda(nodo);
 
-    // Left Right Case
+    // LRotación izquierda-derecha
     if (balance > 1 && valor.getNombre() > nodo->izquierdo->cancion.getNombre())
     {
         nodo->izquierdo = rotacionIzquierda(nodo->izquierdo);
         return rotacionDerecha(nodo);
     }
 
-    // Right Left Case
+    // Rotación derecha-izquierda
     if (balance < -1 && valor.getNombre() < nodo->derecha->cancion.getNombre())
     {
         nodo->derecha = rotacionDerecha(nodo->derecha);
         return rotacionIzquierda(nodo);
     }
 
-    /* return the (unchanged) node pointer */
     return nodo;
 }
 
